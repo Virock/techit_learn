@@ -6,10 +6,20 @@ import techit.model.User;
 
 public interface UserDao {
 
-    User getUser( Long id );
+    User getUser(Long id);
+
+    User getUser(String username);
+
+    User getUser(String username, String email);
+
+    User saveUser(User user);
+
+    User updateUser(User user);
 
     List<User> getUsers();
 
-    User saveUser( User user );
+    List<User> getUsers(int position, Long id);
+
+    List<User> getUsers(int position, Long pos, Long unit_id);
 
 }

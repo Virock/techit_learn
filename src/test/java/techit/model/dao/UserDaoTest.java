@@ -6,6 +6,9 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.testng.annotations.Test;
 
 import techit.model.User;
+import techit.model.User.Position;
+
+;
 
 @Test(groups = "UserDaoTest")
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
@@ -15,26 +18,45 @@ public class UserDaoTest extends AbstractTransactionalTestNGSpringContextTests {
     UserDao userDao;
 
     @Test
-    public void getUser()
-    {
-        assert userDao.getUser( 1L ).getUsername().equalsIgnoreCase( "admin" );
+    public void getUser() {
+        assert userDao.getUser(1L).getUsername().equalsIgnoreCase("admin");
     }
 
     @Test
-    public void getUsers()
-    {
+    public void getUsers() {
         assert userDao.getUsers().size() >= 2;
     }
 
     @Test
-    public void saveUser()
-    {
+    public void saveUser() {
         User user = new User();
-        user.setUsername( "Tom" );
-        user.setPassword( "abcd" );
-        user = userDao.saveUser( user );
-
+        user.setFirstName("Rohan");
+        user.setLastName("Goel");
+        user.setDepartment(null);
+        user.setEmail("rohangoel31@gmail.com");
+        user.setPhoneNumber("323 723-6890");
+        user.setPosition(Position.USER);
+        user.setUsername("Tom");
+        user.setPassword("abcd");
+        user = userDao.saveUser(user);
         assert user.getId() != null;
     }
 
+    @Test
+    public void getUserByUsername() {
+        assert userDao.getUser("cysun").getUsername() != null;
+    }
+
+    @Test
+    public void getUserByPositonId() {
+        assert userDao.getUsers(2, 2L).size() >= 1;
+    }
+
+    @Test
+    public void updateEmail() {
+        User user = userDao.getUser(1L);
+        user.setEmail("abc@xyz.com");
+        user = userDao.updateUser(user);
+        assert user.getId() != null;
+    }
 }
